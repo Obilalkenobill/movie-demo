@@ -1,0 +1,26 @@
+<div class='row'>
+  <div class="col-sm-8 col-sm-offset2">
+      <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+          <div class="form-group">
+              <label for="first_name">
+                  first_name
+              </label>
+              <input type="text" id="first_name" class="form-control" placeholder="first_name" [formControl]="first_nameCtl">
+              <small class="text-danger" *ngIf="first_nameCtl.hasError('required')"> required </small>
+              <small class="text-danger" *ngIf="first_nameCtl.hasError('minlength')"> 
+                  minimum length is {{ first_nameCtl.errors?.minlength.requiredLength }} </small>
+          </div>
+          <div class="form-group">
+              <label for="last_name">
+                  last_name
+              </label>
+              <input type="last_name" id="last_name" class="form-control" [formControl]="last_nameCtl">
+              <small class="text-danger" *ngIf="last_nameCtl.hasError('required')"> require </small>
+              <small class="text-danger" *ngIf="last_nameCtl.errors?.forbidden"> first_name and last_name are equals </small>
+              <small class="text-danger" *ngIf="last_nameCtl.hasError('minlength')"> 
+                  minimum length is {{ last_nameCtl.errors?.minlength.requiredLength }} </small>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid"> save </button>
+      </form>
+  </div>
+</div>
