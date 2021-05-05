@@ -21,4 +21,14 @@ edit(id:any)
 {
 this.router.navigate(['edit_actor/'+id])
 }
+
+delete(actor:Actor):void
+{
+  if(confirm("are you to delete "+actor.first_name+" "+actor.last_name+" ? !!")){
+  this.actorService.deleteActor(actor).subscribe(actors=>
+    {
+      this.actorsList=actors;
+    });
+}
+}
 }

@@ -52,4 +52,13 @@ export class ActorsService {
       return[];
     }))
   }
+  public deleteActor(body: Actor):Observable<Actor[]>
+  {
+    return this.server.delete<Actor>('actors/'+body.id).pipe(
+      map(res=>res.map((m:any)=>new Actor(m))),
+      catchError(err=>{
+      console.error(err);
+      return[];
+    }))
+  }
 }
