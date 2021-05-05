@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actor } from 'src/app/Model/Actor.model';
 import { ActorsService } from 'src/app/services/actors.service';
 
@@ -14,13 +14,24 @@ export class CreateActorComponent implements OnInit {
 userForm!: FormGroup;
   first_nameCtl!: FormControl;
   last_nameCtl!: FormControl;
-
-  constructor(private actorServ:ActorsService, private router: Router, private formBuilder: FormBuilder)
+  actor!:Actor;
+isNew:boolean=true;
+  constructor(private actorServ:ActorsService, private router: Router, private formBuilder: FormBuilder, private route:ActivatedRoute)
   {
     this.initForm();
   }
 
   ngOnInit(): void {
+    if(this.route.snapshot.params['id'])
+    {
+      this.isNew= false;
+  this.actorServ.getOneByID(this.route.snapshot.params['id']).subscribe(m=>
+    {
+      this.actor = m;
+      this.userForm.patchValue(this.actor);
+    });
+
+  }
   }
 
   initForm(): void
@@ -54,11 +65,17 @@ userForm!: FormGroup;
   onSubmit()
   {
     const formVal = this.userForm.value;
-
-    console.log("first_name : " + formVal.first_name + " last_name : " + formVal.last_name);
+if(this.isNew)
+{
     const newActor = new Actor(formVal);
-    console.log(newActor);
     this.actorServ.addActor(newActor).subscribe(m=>{});
+}
+   else
+   {
+     formVal.id=this.actor.id;
+     const newActor= new Actor(formVal);
+     this.actorServ.updateActor(newActor).subscribe();
+   }
     this.router.navigate(['/view_actor']).then(()=>location.reload());
   }
 

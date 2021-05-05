@@ -32,4 +32,24 @@ export class ActorsService {
       return[];
     }))
   }
+  public getOneByID(id:any):Observable<Actor>
+  {
+    return this.server.get<Actor>('actors/'+id).pipe(
+      map(res=>res.length > 0 ? new Actor(res[0]): new Actor({})),
+      catchError(err=>
+        {console.error(err);
+        return [];
+      })
+    );
+  }
+
+  public updateActor(body: Actor):Observable<Actor[]>
+  {
+    return this.server.put<Actor>('actors/update/'+body.id, body).pipe(
+      map(res=>res.map((m:any)=>new Actor(m))),
+      catchError(err=>{
+      console.error(err);
+      return[];
+    }))
+  }
 }

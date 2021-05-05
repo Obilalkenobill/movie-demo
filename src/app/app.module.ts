@@ -9,12 +9,14 @@ import { ActorsService } from './services/actors.service';
 import { ServerService } from './services/server.service';
 import { CreateActorComponent } from './components/create-actor/create-actor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FournofoundComponent } from './components/fournofound/fournofound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ActorsComponent,
-    CreateActorComponent
+    CreateActorComponent,
+    FournofoundComponent
   ],
   imports: [
     BrowserModule,

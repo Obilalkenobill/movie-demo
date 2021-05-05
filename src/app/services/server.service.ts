@@ -19,4 +19,8 @@ export class ServerService {
   {
     return this.http.post(this.BASE_URL+url, (body));
   }
+  public put<T>(url:string, body:T):Observable<any>
+  {
+    return this.http.put(this.BASE_URL+url, (body));
+  }
 }

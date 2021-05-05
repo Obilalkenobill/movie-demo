@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actor } from 'src/app/Model/Actor.model';
 import {ActorsService} from '../../services/actors.service'
 @Component({
@@ -8,7 +9,7 @@ import {ActorsService} from '../../services/actors.service'
 })
 export class ActorsComponent implements OnInit {
 public actorsList!:Actor[];
-  constructor(private actorService:ActorsService) { }
+  constructor(private actorService:ActorsService, private router: Router) { }
 
   ngOnInit(): void {
   this.actorService.getAll().subscribe(actors=>
@@ -16,5 +17,8 @@ public actorsList!:Actor[];
       this.actorsList=actors;
     });
   }
-
+edit(id:any)
+{
+this.router.navigate(['edit_actor/'+id])
+}
 }
